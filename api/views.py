@@ -14,3 +14,15 @@ def getPosts(request):
     serializer = PostSerializer(posts, many=True)
 
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getPost(request, id):
+
+    # retrieving a single object from the database
+    post = Post.objects.get(id=id)
+
+    # serializing the object
+    serializer = PostSerializer(post)
+
+    return Response(serializer.data)
