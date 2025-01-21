@@ -26,3 +26,16 @@ def getPost(request, id):
     serializer = PostSerializer(post)
 
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+def savePost(request):
+
+    # serializing data object
+
+    serializer = PostSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+
+    return Response(serializer.data)
