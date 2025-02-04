@@ -1,3 +1,4 @@
+from os import stat
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from blog.models import Post
@@ -39,3 +40,18 @@ def savePost(request):
         serializer.save()
 
     return Response(serializer.data)
+
+
+@api_view(['PUT'])
+def updatePost(request, post_id):
+
+    # retrieving a single object from the database
+    post = Post.objects.get(id=post_id)  # this is instance
+
+    # here need instance for update data
+    serializer = PostSerializer(post, data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response({'msg': 'Complete Data Updated'})
+    return Response({'message: Something is wrong'})
